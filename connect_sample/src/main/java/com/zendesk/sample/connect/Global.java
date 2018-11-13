@@ -22,12 +22,15 @@ public class Global extends Application {
     private final static String NOTIFICATION_CHANNEL_ID = "connect_demo_notification_channel";
     private final static String NOTIFICATION_CHANNEL_NAME = "Connect Demo Notifications";
 
+    private static boolean missingCredentials = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         if (CONNECT_API_KEY.isEmpty() || PROJECT_ID.isEmpty() || API_KEY.isEmpty() || FCM_SENDER_ID.isEmpty()) {
-            throw new RuntimeException("You must provide a Connect API key and valid Firebase project credentials");
+            missingCredentials = true;
+            return;
         }
 
         Logger.setLoggable(true);
@@ -57,5 +60,9 @@ public class Global extends Application {
             Outbound.init(this, CONNECT_API_KEY);
         }
 
+    }
+
+    static boolean isMissingCredentials() {
+        return missingCredentials;
     }
 }

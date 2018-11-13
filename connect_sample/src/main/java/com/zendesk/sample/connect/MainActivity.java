@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Global.isMissingCredentials()) {
+            setContentView(R.layout.missing_credentials);
+            return;
+        }
         setContentView(R.layout.activity_main);
 
         sampleUser = new User.Builder()
